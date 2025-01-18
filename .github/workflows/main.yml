@@ -1,0 +1,27 @@
+name: CI/CD
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  CI:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Auth to Docker Hub
+        run: echo "Executing auth to Docker Hub"
+      - name: Build Docker Image
+        run: echo "Executing build Docker Image"
+      - name: Push Docker Image
+        run: echo "Executing push Docker Image"
+  CD:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Auth to AWS
+        run: echo "Executing auth to AWS"
+      - name: Configure kubectl
+        run: echo "Executing configure kubectl"
+      - name: Deploy to Kubernetes
+        run: echo "Executing deploy to Kubernetes"
