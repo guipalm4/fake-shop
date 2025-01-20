@@ -18,10 +18,15 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Build Docker Image
-        run: echo "Executing build Docker Image"
-      - name: Push Docker Image
-        run: echo "Executing push Docker Image"
+      - name: Build and push Docker Image
+        uses: docker/build-push-action@v6
+        with:
+          context: ./scr
+          push: true
+          file: ./src/Dockerfile
+          tags: |
+            guipalm4/fake-shop:latest
+            guipalm4/fake-shop:v${{ github.run_number}}
   cd:
     runs-on: ubuntu-latest
     needs: ci
