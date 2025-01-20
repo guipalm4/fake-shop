@@ -5,19 +5,26 @@ on:
     branches:
       - main
   workflow_dispatch:
-
 jobs:
-  CI:
+  ci:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
       - name: Auth to Docker Hub
-        run: echo "Executing auth to Docker Hub"
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
       - name: Build Docker Image
         run: echo "Executing build Docker Image"
       - name: Push Docker Image
         run: echo "Executing push Docker Image"
-  CD:
+  cd:
     runs-on: ubuntu-latest
+    needs: ci
     steps:
       - name: Auth to AWS
         run: echo "Executing auth to AWS"
